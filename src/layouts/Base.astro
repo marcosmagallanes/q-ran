@@ -1,0 +1,159 @@
+---
+import "../style.css";
+
+import Home from "../lib/icons/Home.astro";
+import Menu from "../lib/icons/Menu.astro";
+
+import { ViewTransitions } from "astro:transitions";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <ViewTransitions />
+  </head>
+  <body>
+    <nav>
+      <section>
+        <a href="/"><Home /></a>
+        <slot name="controls" />
+      </section>
+      <button id="menu-button"><Menu /></button>
+    </nav>
+    <aside id="menu">
+      <ul>
+        <li><a href="/quran">Quran</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </aside>
+
+    <slot />
+
+    <style>
+      body {
+        background-color: rgb(255, 252, 240);
+        color: rgb(29, 28, 27);
+
+        width: 100%;
+        max-width: var(--size-content-3);
+        margin: var(--size-fluid-4) auto;
+        padding: 0 var(--size-fluid-3);
+
+        font-size: 19px;
+        line-height: 1.6;
+        font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD",
+          "Book Antiqua", Georgia, serif;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--size-fluid-3);
+      }
+
+      nav section {
+        display: flex;
+        align-items: center;
+        gap: var(--size-fluid-2);
+      }
+
+      nav {
+        position: relative;
+      }
+
+      aside {
+        top: 100%;
+        left: 0;
+        width: auto;
+        padding: 0;
+
+        margin-top: var(--size-fluid-1);
+
+        border-radius: var(--radius-2);
+        background-color: #f2f0e5;
+        color: var(--sand-12);
+
+        height: 0; /* Initially no height */
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          height 0.3s var(--ease-3),
+          opacity 0.3s var(--ease-3);
+      }
+
+      aside.menu-open {
+        padding: var(--size-fluid-1) var(--size-fluid-3);
+        opacity: 1;
+        height: auto;
+        overflow: visible;
+      }
+
+      aside ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--size-fluid-2);
+      }
+
+      aside ul li a {
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+
+    <style is:global>
+      blockquote {
+        font-style: italic;
+        font-size: 20px;
+        margin-top: 3em;
+        margin-bottom: 3em;
+      }
+
+      blockquote p {
+        margin: 0;
+      }
+
+      blockquote h4 {
+        font-size: 14px;
+        font-style: normal;
+        margin: 0;
+        text-align: right;
+      }
+
+      nav a,
+      nav button {
+        opacity: 10%;
+        transition: opacity 0.3s var(--ease-3);
+        font-size: 18px;
+        display: flex;
+        padding: var(--size-2);
+        border-radius: var(--radius-1);
+        border: 0;
+        background-color: initial;
+      }
+
+      nav a:hover,
+      nav button:hover {
+        opacity: 100%;
+        background-color: var(--sand-3);
+        color: var(--sand-11);
+      }
+
+      nav a:visited {
+        color: inherit;
+      }
+    </style>
+
+    <script>
+      document?.querySelector("#menu-button")?.addEventListener("click", () => {
+        document?.querySelector("#menu")?.classList.toggle("menu-open");
+      });
+    </script>
+  </body>
+</html>

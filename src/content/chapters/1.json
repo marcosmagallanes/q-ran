@@ -1,0 +1,36 @@
+{
+  "id": 1,
+  "arabic": "الفاتحة",
+  "english": ["The Opener"],
+  "epoch": "mecca",
+  "verses": [
+    {
+      "id": 1,
+      "text": "In the Name of God, the All Merciful, Ever Merciful"
+    },
+    {
+      "id": 2,
+      "text": "All praise be to God, Lord of the universe;"
+    },
+    {
+      "id": 3,
+      "text": "The All Merciful, Ever Merciful"
+    },
+    {
+      "id": 4,
+      "text": "Ruler of the day of reckoning."
+    },
+    {
+      "id": 5,
+      "text": "You alone we worship; and You alone we implore for help."
+    },
+    {
+      "id": 6,
+      "text": "Guide us to the straight path,"
+    },
+    {
+      "id": 7,
+      "text": "the path of those whom You have favored, not of those who have incurred Your wrath, nor of those who have gone astray."
+    }
+  ]
+}

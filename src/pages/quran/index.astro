@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+const chapters = await getCollection("chapters").then((c) =>
+  c.sort((a, b) => Number(a.id) - Number(b.id)),
+);
+---
+
+<Base>
+  <ol>
+    {
+      chapters.map(({ data }) => (
+        <li data-chapter={data.id}>
+          <a href={`/quran/${data.id}`}>{data.english}</a>
+        </li>
+      ))
+    }
+  </ol>
+</Base>
+
+<style>
+  ol {
+    gap: var(--size-fluid-3);
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+
+  ol li {
+    display: flex;
+    align-items: center;
+    gap: var(--size-fluid-1);
+    position: relative;
+  }
+
+  ol li::before {
+    content: attr(data-chapter);
+    font-size: var(--font-size-0);
+    color: var(--sand-8);
+    position: absolute;
+    top: 50%;
+    left: var(--size-5);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  ol li a {
+    background-color: #f2f0e5;
+    border-radius: var(--radius-2);
+    color: var(--sand-12);
+    /* color: rgb(29, 28, 27); */
+
+    width: 100%;
+    height: auto;
+    padding: var(--size-fluid-3) var(--size-9);
+
+    text-decoration: none;
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-6);
+
+    transition: background-color 0.4s ease-in-out;
+  }
+
+  ol li a:hover,
+  ol li a:focus {
+    background-color: var(--sand-1);
+    /* color: var(--sand-4); */
+    text-decoration: inherit;
+  }
+</style>

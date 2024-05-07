@@ -1,0 +1,112 @@
+---
+import type { PaginateFunction } from "astro";
+
+import Base from "../../layouts/Base.astro";
+import Left from "../../lib/icons/Left.astro";
+import Right from "../../lib/icons/Right.astro";
+import Book from "../../lib/icons/Book.astro";
+
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction;
+}) {
+  const chapters = await getCollection("chapters");
+  const sorted = chapters.sort((a, b) => Number(a.data.id) - Number(b.data.id));
+  return paginate(sorted, { pageSize: 1 });
+}
+
+const { page } = Astro.props;
+
+const { id, arabic, english, epoch, verses } = page.data[0].data;
+---
+
+<Base>
+  <div class="controls" slot="controls">
+    <a href="/quran"><Book /></a>
+    <a href={page.url.prev}><Left /></a>
+    <a href={page.url.next}><Right /></a>
+  </div>
+
+  <header>
+    <h1 data-chapter={id}>{english}</h1>
+    <bdi>{arabic}</bdi>
+  </header>
+  <ul>
+    {
+      verses.map(({ id, text }) => (
+        <li id={String(id)}>
+          <span>{id}</span>
+          <span>{text}</span>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: var(--size-fluid-2);
+  }
+
+  .controls a {
+    color: var(--sand-12);
+    display: flex;
+    align-items: center;
+    gap: var(--size-fluid-2);
+  }
+
+  header {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--size-4);
+  }
+
+  header bdi {
+    font-size: 16px;
+    color: rgb(111, 110, 105);
+  }
+
+  header h1 {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: var(--size-fluid-2);
+  }
+
+  header h1::after {
+    content: attr(data-chapter);
+    font-size: var(--font-size-fluid-0);
+    color: var(--sand-6);
+    left: -1.5rem;
+    pointer-events: none;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+
+  ul > * + * {
+    border-top-width: 1px;
+    border-color: black;
+  }
+
+  ul li {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: var(--size-fluid-3);
+    padding-top: var(--size-fluid-2);
+    padding-bottom: var(--size-fluid-2);
+  }
+
+  ul li :first-child {
+    max-width: var(--size-fluid-3);
+  }
+</style>
