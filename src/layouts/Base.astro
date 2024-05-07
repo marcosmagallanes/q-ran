@@ -39,7 +39,7 @@ import { ViewTransitions } from "astro:transitions";
         background-color: rgb(255, 252, 240);
         color: rgb(29, 28, 27);
 
-        width: 100%;
+        width: fit-content;
         max-width: var(--size-content-3);
         margin: var(--size-fluid-4) auto;
         padding: 0 var(--size-fluid-3);
@@ -51,6 +51,8 @@ import { ViewTransitions } from "astro:transitions";
       }
 
       nav {
+        position: relative;
+        
         display: flex;
         justify-content: space-between;
         margin-top: var(--size-fluid-3);
@@ -60,10 +62,6 @@ import { ViewTransitions } from "astro:transitions";
         display: flex;
         align-items: center;
         gap: var(--size-fluid-2);
-      }
-
-      nav {
-        position: relative;
       }
 
       aside {
